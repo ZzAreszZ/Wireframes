@@ -1,0 +1,8 @@
+- [x] Configurar Tailwind CSS agregando directivas a index.css
+- [x] Crear tailwind.config.js para customizar colores azules
+- [x] Actualizar App.js para usar clases de Tailwind en lugar de CSS personalizado
+- [x] Limpiar App.css ya que se usará Tailwind
+- [x] Probar la aplicación ejecutándola para verificar estilos
+- [ ] Crear contenedor adicional para pantalla de pago al lado del actual
+- [ ] Diseñar versión inicial de pantalla de pago con estilos similares
+- [ ] Ajustar layout para mostrar dos wireframes side-by-side

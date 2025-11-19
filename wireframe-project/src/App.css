@@ -1,0 +1,329 @@
+/* Wireframe styles for iPhone 13 mini: 375x812 */
+.wireframe-container {
+  width: 375px;
+  height: 812px;
+  margin: 0 auto;
+  border: 1px solid #ccc;
+  position: relative;
+  overflow: hidden;
+  background-color: #f5f5f5;
+}
+
+.home {
+  padding: 20px;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.app-bar {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background: linear-gradient(135deg, #3b82f6, #60a5fa);
+  color: white;
+  padding: 10px 20px;
+  margin: 0 -20px 20px -20px;
+  width: calc(100% + 40px);
+  border-radius: 0;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  gap: 10px;
+}
+
+.back-button {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 50%;
+  transition: background-color 0.3s;
+}
+
+.back-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.app-title {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.client-info {
+  font-size: 14px;
+  font-weight: 500;
+  margin-left: 20px;
+}
+
+.filter-buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.filter-btn {
+  background-color: #e5e7eb;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.filter-btn:hover {
+  background-color: #d1d5db;
+}
+
+.filter-btn.active {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.card-container {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: 20px;
+  padding-bottom: 10px;
+}
+
+.invoice-card {
+  width: 250px;
+  height: 280px;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  padding: 20px;
+  box-sizing: border-box;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.invoice-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #3b82f6, #60a5fa);
+}
+
+.invoice-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+  background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #1e40af; /* Azul oscuro para títulos de tarjetas */
+  margin: 0;
+}
+
+.status {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.status.pendiente {
+  background-color: #fef3c7;
+  color: #d97706;
+}
+
+.status.pagada {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.card-body {
+  font-size: 14px;
+  color: #374151; /* Gris oscuro para texto */
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.amount {
+  font-size: 18px;
+  font-weight: bold;
+  color: #1e40af;
+  margin-bottom: 5px;
+}
+
+.dates {
+  font-size: 16px;
+  color: #6b7280;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.date-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.date-item svg {
+  flex-shrink: 0;
+}
+
+.card-buttons {
+  display: flex;
+  justify-content: space-around;
+}
+
+.button {
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  border-radius: 20px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.view-button {
+  background: linear-gradient(135deg, #3b82f6, #60a5fa);
+}
+
+.pay-button {
+  background: linear-gradient(135deg, #3b82f6, #60a5fa);
+}
+
+.download-button {
+  background: linear-gradient(135deg, #3b82f6, #60a5fa);
+}
+
+.status-bar {
+  height: 20px;
+  background-color: #000;
+  color: white;
+  font-size: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+}
+
+.summary-section {
+  margin-top: 30px;
+  padding: 20px;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  border: 1px solid #e5e7eb;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.summary-amount {
+  color: #dc2626;
+  font-weight: bold;
+}
+
+.summary-amount.paid {
+  color: #059669;
+}
+
+/* Estilos para pantalla de pago */
+.payment-card {
+  width: 100%;
+  max-width: 350px;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  padding: 20px;
+  box-sizing: border-box;
+  margin: 20px auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.payment-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #3b82f6, #60a5fa);
+}
+
+.payment-form {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+  color: #374151;
+  margin-bottom: 5px;
+}
+
+.form-select, .form-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  background-color: #ffffff;
+  transition: border-color 0.3s;
+}
+
+.form-select:focus, .form-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.cancel-button {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+.cancel-button:hover {
+  background: linear-gradient(135deg, #dc2626, #b91c1c);
+}
+
+
