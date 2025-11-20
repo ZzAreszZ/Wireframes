@@ -3,6 +3,11 @@ import './App.css';
 
 function App() {
   const [filter, setFilter] = useState('Todas');
+  const [cardName, setCardName] = useState('');
+  const [cardNumber, setCardNumber] = useState('');
+  const [dni, setDni] = useState('');
+  const [expiryDate, setExpiryDate] = useState('');
+  const [cvv, setCvv] = useState('');
 
   const invoices = [
     { id: 1, title: 'Periodo: 08/2025', amount: '$150.00', issueDate: '2023-10-01', dueDate: '2023-10-15', status: 'Pendiente' },
@@ -107,14 +112,99 @@ function App() {
                 <span>Visa ****1234</span>
                 <span style={{ color: '#6b7280', fontSize: '12px' }}>Predeterminado</span>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px', backgroundColor: '#f8fafc', borderRadius: '8px', border: '1px solid #e5e7eb' }}>
-                <span>Mastercard ****5678</span>
-                <span style={{ color: '#6b7280', fontSize: '12px' }}>Secundario</span>
+            </div>
+            <button className="button view-button" style={{ width: '100%', marginTop: '15px', fontSize: '16px', padding: '12px' }} title="Agregar Tarjeta">
+              Agregar Tarjeta
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Pantalla de Agregar Tarjeta */}
+      <div className="wireframe-container">
+        <div className="status-bar">
+          9:41 <span>📶 100%</span>
+        </div>
+        <div className="app-bar">
+          <button className="back-button" title="Volver">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19 12H5M12 19l-7-7 7-7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </button>
+          <span className="app-title">Agregar Tarjeta</span>
+          <span className="client-info">Cliente: 111111/1</span>
+        </div>
+        <div className="home">
+          <div className="payment-card">
+            <h3 style={{ fontSize: '18px', fontWeight: 'bold', color: '#1e40af', marginBottom: '20px' }}>Nueva Tarjeta de Crédito</h3>
+            <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+              <img src="https://via.placeholder.com/300x100?text=Tarjetas+Aceptadas" alt="Tarjetas aceptadas" style={{ width: '100%', maxWidth: '300px', borderRadius: '8px' }} />
+            </div>
+            <div className="payment-form">
+              <div className="form-group">
+                <label>Nombre en la Tarjeta:</label>
+                <input
+                  type="text"
+                  className="form-input"
+                  value={cardName}
+                  onChange={(e) => setCardName(e.target.value)}
+                  placeholder="Ej: Juan Pérez"
+                />
+              </div>
+              <div className="form-group">
+                <label>Número de Tarjeta:</label>
+                <input
+                  type="text"
+                  className="form-input"
+                  value={cardNumber}
+                  onChange={(e) => setCardNumber(e.target.value)}
+                  placeholder="1234 5678 9012 3456"
+                />
+              </div>
+              <div className="form-group">
+                <label>DNI del Titular:</label>
+                <input
+                  type="text"
+                  className="form-input"
+                  value={dni}
+                  onChange={(e) => setDni(e.target.value)}
+                  placeholder="12345678"
+                />
+              </div>
+              <div style={{ display: 'flex', gap: '10px' }}>
+                <div className="form-group" style={{ flex: 1 }}>
+                  <label>Fecha de Expiración:</label>
+                  <input
+                    type="text"
+                    className="form-input"
+                    value={expiryDate}
+                    onChange={(e) => setExpiryDate(e.target.value)}
+                    placeholder="MM/AA"
+                  />
+                </div>
+                <div className="form-group" style={{ flex: 1, position: 'relative' }}>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    CVV
+                    <button className="cvv-help-button" title="El CVV es el código de seguridad de 3 dígitos en el reverso de tu tarjeta">?</button>
+                  </label>
+                  <input
+                    type="text"
+                    className="form-input"
+                    value={cvv}
+                    onChange={(e) => setCvv(e.target.value)}
+                    placeholder="123"
+                  />
+                </div>
               </div>
             </div>
-            <button className="button view-button" style={{ width: '100%', marginTop: '15px', fontSize: '16px', padding: '12px' }} title="Añadir Método de Pago">
-              + Añadir Método de Pago
-            </button>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '30px', gap: '16px' }}>
+              <button className="button view-button" title="Guardar" style={{ flex: 1, padding: '12px 24px', fontSize: '16px', fontWeight: '600', borderRadius: '12px' }}>
+                Guardar
+              </button>
+              <button className="cancel-button" title="Cancelar" style={{ flex: 1 }}>
+                Cancelar
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -135,61 +225,58 @@ function App() {
         </div>
         <div className="home">
           <div className="payment-card">
-            <h3 style={{ fontSize: '18px', fontWeight: 'bold', color: '#1e40af', marginBottom: '20px' }}>Métodos de Pago</h3>
-            <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-              <img src="https://via.placeholder.com/300x100?text=Tarjetas+Aceptadas" alt="Tarjetas aceptadas" style={{ width: '100%', maxWidth: '300px', borderRadius: '8px' }} />
-            </div>
-            <p style={{ fontSize: '14px', color: '#6b7280', marginBottom: '20px', textAlign: 'center' }}>
-              Aviso: Pago seguro con tarjetas en medio digital. Todos los datos están protegidos.
-            </p>
-            <div style={{ marginBottom: '20px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
-                <span style={{ fontWeight: 'bold' }}>Factura:</span>
-                <span>123456789</span>
+            <h3 style={{ fontSize: '20px', fontWeight: 'bold', color: '#1e40af', marginBottom: '15px', textAlign: 'center' }}>Confirmar Pago</h3>
+            <div style={{ backgroundColor: '#f8fafc', padding: '15px', borderRadius: '10px', marginBottom: '20px', border: '1px solid #e5e7eb' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+                <span style={{ fontWeight: '600', color: '#374151' }}>Factura:</span>
+                <span style={{ color: '#1e40af', fontWeight: 'bold' }}>123456789</span>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <span style={{ fontWeight: 'bold' }}>Periodo:</span>
-                <span>08/2025</span>
+                <span style={{ fontWeight: '600', color: '#374151' }}>Periodo:</span>
+                <span style={{ color: '#1e40af', fontWeight: 'bold' }}>08/2025</span>
               </div>
             </div>
             <div className="payment-form">
               <div className="form-group">
-                <label>Seleccionar Tarjeta:</label>
-                <select className="form-select">
+                <label style={{ fontWeight: '600' }}>Seleccionar Tarjeta:</label>
+                <select className="form-select" style={{ backgroundColor: '#ffffff', border: '2px solid #e5e7eb', borderRadius: '8px', padding: '10px', fontSize: '16px' }}>
                   <option>Visa ****1234</option>
                   <option>Mastercard ****5678</option>
                   <option>American Express ****9012</option>
                 </select>
               </div>
               <div className="form-group">
-                <label>Cuotas:</label>
-                <select className="form-select">
+                <label style={{ fontWeight: '600' }}>Cuotas:</label>
+                <select className="form-select" style={{ backgroundColor: '#ffffff', border: '2px solid #e5e7eb', borderRadius: '8px', padding: '10px', fontSize: '16px' }}>
                   <option>1 cuota</option>
                   <option>3 cuotas</option>
                   <option>6 cuotas</option>
                   <option>12 cuotas</option>
                 </select>
               </div>
-              <div style={{ marginTop: '20px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
-                  <span>Importe:</span>
-                  <span>$150.00</span>
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
-                  <span>Recargo Fin:</span>
-                  <span>$5.00</span>
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold', fontSize: '16px' }}>
-                  <span>Total:</span>
-                  <span>$155.00</span>
-                </div>
+            </div>
+            <div style={{ backgroundColor: '#f0f9ff', padding: '15px', borderRadius: '10px', marginTop: '20px', border: '1px solid #3b82f6' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+                <span style={{ color: '#374151' }}>Importe:</span>
+                <span style={{ color: '#374151', fontWeight: '600' }}>$150.00</span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+                <span style={{ color: '#374151' }}>Recargo Fin:</span>
+                <span style={{ color: '#374151', fontWeight: '600' }}>$5.00</span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold', fontSize: '18px', color: '#1e40af' }}>
+                <span>Total:</span>
+                <span>$155.00</span>
               </div>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '30px' }}>
-              <button className="button view-button" title="Pagar" style={{ width: '200px' }}>
-                Pagar
+            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '25px' }}>
+              <button className="button view-button" title="Pagar" style={{ width: '100%', padding: '15px', fontSize: '18px', fontWeight: 'bold', borderRadius: '12px' }}>
+                Confirmar Pago
               </button>
             </div>
+            <p style={{ fontSize: '12px', color: '#6b7280', marginTop: '15px', textAlign: 'center' }}>
+              🔒 Pago seguro con encriptación SSL. Todos los datos están protegidos.
+            </p>
           </div>
         </div>
       </div>
