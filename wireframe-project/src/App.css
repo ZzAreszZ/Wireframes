@@ -344,3 +344,120 @@
 }
 
 
+
+/* Payment Carousel Styles */
+.payment-carousel {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: 15px;
+  padding: 10px 0 20px 0;
+  -webkit-overflow-scrolling: touch;
+}
+
+.payment-method-card {
+  width: 280px;
+  height: 170px;
+  border-radius: 15px;
+  padding: 20px;
+  box-sizing: border-box;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  flex-shrink: 0;
+  scroll-snap-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.payment-method-card.visa {
+  background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+}
+
+.payment-method-card.mastercard {
+  background: linear-gradient(135deg, #be123c 0%, #f43f5e 100%);
+}
+
+.payment-method-card .card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.payment-method-card .card-logo {
+  font-weight: bold;
+  font-style: italic;
+  font-size: 18px;
+}
+
+.payment-method-card .card-number {
+  font-size: 18px;
+  letter-spacing: 2px;
+  margin-top: 20px;
+}
+
+.payment-method-card .card-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.payment-method-card .card-holder {
+  font-size: 14px;
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+
+.payment-method-card .card-expiry {
+  font-size: 14px;
+}
+
+.add-card-placeholder {
+  width: 280px;
+  height: 170px;
+  border-radius: 15px;
+  border: 2px dashed #9ca3af;
+  background-color: #f3f4f6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  scroll-snap-align: center;
+  transition: all 0.3s ease;
+  color: #4b5563;
+}
+
+.add-card-placeholder:hover {
+  background-color: #e5e7eb;
+  border-color: #6b7280;
+}
+
+.add-card-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #3b82f6;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+
+.add-card-text {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.add-card-subtext {
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 5px;
+  text-align: center;
+  padding: 0 20px;
+}
