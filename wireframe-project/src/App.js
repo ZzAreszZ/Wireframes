@@ -6,6 +6,10 @@ import ErrorScreen from './components/ErrorScreen';
 import AddCardScreen from './components/AddCardScreen';
 import PayInvoiceScreen from './components/PayInvoiceScreen';
 import InvoiceDetailScreen from './components/InvoiceDetailScreen';
+import InvoiceHistoryScreen from './components/InvoiceHistoryScreen';
+import InvoiceCard from './components/InvoiceCard';
+
+import WalletScreen from './components/WalletScreen';
 
 function App() {
   const [filter, setFilter] = useState('Todas');
@@ -21,18 +25,20 @@ function App() {
   const [screen, setScreen] = useState('invoices');
   const [selectedInvoiceId, setSelectedInvoiceId] = useState(null);
 
+  const [cards, setCards] = useState([
+    { id: 1, type: 'Visa', number: '**** **** **** 1234', expiry: '12/28' },
+    { id: 2, type: 'Mastercard', number: '**** **** **** 5678', expiry: '09/26' }
+  ]);
+
   const invoices = [
     { id: 1, title: 'Periodo: 08/2025', amount: '$150.00', issueDate: '2023-10-01', dueDate: '2023-10-15', status: 'Pendiente' },
     { id: 2, title: 'Periodo: 09/2025', amount: '$50.00', issueDate: '2023-10-05', dueDate: '2023-10-20', status: 'Pagada' },
     { id: 3, title: 'Periodo: 10/2025', amount: '$80.00', issueDate: '2023-10-10', dueDate: '2023-10-25', status: 'Pendiente' },
   ];
 
-  const [periodFilter, setPeriodFilter] = useState('');
-
   const filteredInvoices = invoices.filter(invoice => {
     const matchesStatus = filter === 'Todas' ? true : invoice.status === filter;
-    const matchesPeriod = periodFilter === '' ? true : invoice.title.toLowerCase().includes(periodFilter.toLowerCase());
-    return matchesStatus && matchesPeriod;
+    return matchesStatus;
   });
 
   const handleDownloadInvoice = () => alert('Descargando factura...');
@@ -43,6 +49,17 @@ function App() {
   const handleViewInvoice = (id) => {
     setSelectedInvoiceId(id);
     setScreen('invoice-detail');
+  };
+
+  const handlePayInvoice = (invoice) => {
+    // In a real app, you might pass the invoice amount/id to the payment screen
+    setScreen('pay-invoice');
+  }
+
+  const handleRemoveCard = (id) => {
+    if (window.confirm('¿Estás seguro de que deseas eliminar esta tarjeta?')) {
+      setCards(cards.filter(card => card.id !== id));
+    }
   };
 
   const handleNextInvoice = () => {
@@ -129,8 +146,6 @@ function App() {
       <Navigation />
       {screen === 'invoices' && (
         <div style={{ display: 'flex', gap: 20, justifyContent: 'center', padding: 20, flexWrap: 'wrap' }}>
-
-          {/* Pantalla de Facturas */}
           <div className="wireframe-container">
             <div className="status-bar">9:41 <span>📶 100%</span></div>
             <div className="app-bar">
@@ -140,7 +155,29 @@ function App() {
                 </svg>
               </button>
               <span className="app-title">Facturas</span>
-              <span className="client-info">Cliente: 111111/1</span>
+              <button
+                onClick={() => setScreen('invoice-history')}
+                style={{
+                  background: 'rgba(255,255,255,0.2)',
+                  border: 'none',
+                  borderRadius: '20px',
+                  padding: '6px 12px',
+                  color: 'white',
+                  fontSize: '13px',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  backdropFilter: 'blur(5px)'
+                }}
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+                Historial
+              </button>
             </div>
             <div className="home">
               <div className="filter-buttons">
@@ -149,102 +186,97 @@ function App() {
                 <button className={`filter-btn ${filter === 'Pagada' ? 'active' : ''}`} onClick={() => setFilter('Pagada')}>Pagadas</button>
               </div>
 
-              <div style={{ padding: '0 15px 15px 15px' }}>
-                <input
-                  type="text"
-                  placeholder="Buscar por periodo (ej: 08/2025)"
-                  value={periodFilter}
-                  onChange={(e) => setPeriodFilter(e.target.value)}
-                  style={{
-                    width: '100%',
-                    padding: '10px',
-                    borderRadius: '8px',
-                    border: '1px solid #cbd5e1',
-                    fontSize: '14px',
-                    outline: 'none'
-                  }}
-                />
-              </div>
-
               <div className="card-container">
                 {filteredInvoices.map(invoice => (
-                  <div key={invoice.id} className="invoice-card">
-                    <div className="card-header">
-                      <h3 className="card-title">{invoice.title}</h3>
-                      <span className={`status ${invoice.status.toLowerCase()}`}>{invoice.status}</span>
-                    </div>
-                    <div className="card-body">
-                      <div className="amount">{invoice.amount}</div>
-                      <div className="dates">
-                        <div className="date-item">Emisión: {invoice.issueDate}</div>
-                        <div className="date-item">Vencimiento: {invoice.dueDate}</div>
-                      </div>
-                    </div>
-                    <div className="card-buttons">
-                      <button className="button view-button" title="Ver detalle" onClick={() => handleViewInvoice(invoice.id)}>
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                          <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                      </button>
-                      <button className="button pay-button" title="Pagar" onClick={() => setScreen('pay-invoice')}>$</button>
-                      <button className="button download-button" title="Descargar" onClick={handleDownloadInvoice}>
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                      </button>
-                    </div>
-                  </div>
+                  <InvoiceCard
+                    key={invoice.id}
+                    invoice={invoice}
+                    onView={handleViewInvoice}
+                    onPay={handlePayInvoice}
+                    onDownload={handleDownloadInvoice}
+                  />
                 ))}
                 {filteredInvoices.length === 0 && (
-                  <div style={{ textAlign: 'center', padding: '20px', color: '#64748b' }}>
-                    No se encontraron facturas para el periodo seleccionado.
+                  <div style={{ textAlign: 'center', padding: '40px 20px', color: '#94a3b8', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
+                    <div style={{ width: '60px', height: '60px', borderRadius: '50%', backgroundColor: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '30px' }}>
+                      📄
+                    </div>
+                    <div style={{ fontWeight: '500' }}>No se encontraron facturas</div>
+                    <div style={{ fontSize: '13px' }}>Intenta cambiar el filtro de estado.</div>
                   </div>
                 )}
               </div>
 
-              <div className="payment-methods-section">
-                <h3 style={{ fontSize: 18, fontWeight: 'bold', color: '#1e40af', marginBottom: 15 }}>Métodos de Pago</h3>
-
-                <div className="payment-carousel">
-                  {/* Mock Card 1 */}
-                  <div className="payment-method-card visa">
-                    <div className="card-top">
-                      <span className="card-logo">VISA</span>
-                      <span style={{ fontSize: 20 }}>💳</span>
-                    </div>
-                    <div className="card-number">**** **** **** 1234</div>
-                    <div className="card-bottom">
-                      <div className="card-holder">JUAN PEREZ</div>
-                      <div className="card-expiry">12/28</div>
-                    </div>
+              <div style={{ padding: '10px 15px 30px 15px' }}>
+                <div style={{ fontSize: '14px', fontWeight: '600', color: '#64748b', marginBottom: '10px', paddingLeft: '5px' }}>GESTIÓN</div>
+                <button
+                  onClick={() => setScreen('wallet')}
+                  style={{
+                    width: '100%',
+                    backgroundColor: '#fff',
+                    border: 'none',
+                    borderRadius: '16px',
+                    padding: '16px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '15px',
+                    cursor: 'pointer',
+                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                    transition: 'transform 0.2s'
+                  }}
+                  onMouseDown={(e) => e.currentTarget.style.transform = 'scale(0.98)'}
+                  onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                  onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                >
+                  <div style={{
+                    width: '44px',
+                    height: '44px',
+                    borderRadius: '12px',
+                    background: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: 'white',
+                    boxShadow: '0 4px 6px rgba(37, 99, 235, 0.2)'
+                  }}>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                      <line x1="1" y1="10" x2="23" y2="10"></line>
+                    </svg>
                   </div>
-
-                  {/* Mock Card 2 */}
-                  <div className="payment-method-card mastercard">
-                    <div className="card-top">
-                      <span className="card-logo">Mastercard</span>
-                      <span style={{ fontSize: 20 }}>💳</span>
-                    </div>
-                    <div className="card-number">**** **** **** 5678</div>
-                    <div className="card-bottom">
-                      <div className="card-holder">JUAN PEREZ</div>
-                      <div className="card-expiry">09/26</div>
-                    </div>
+                  <div style={{ textAlign: 'left', flex: 1 }}>
+                    <div style={{ fontWeight: '700', color: '#1e293b', fontSize: '16px', marginBottom: '2px' }}>Mis Tarjetas</div>
+                    <div style={{ fontSize: '13px', color: '#64748b' }}>Administrar medios de pago</div>
                   </div>
-
-                  {/* Add Card Placeholder */}
-                  <div className="add-card-placeholder" onClick={() => setScreen('add-card')}>
-                    <div className="add-card-icon">+</div>
-                    <div className="add-card-text">Agregar un medio de pago</div>
-                    <div className="add-card-subtext">Cuenta bancaria, digital o tarjeta de crédito.</div>
+                  <div style={{ color: '#cbd5e1' }}>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
                   </div>
-                </div>
+                </button>
               </div>
             </div>
           </div>
-
         </div>
+      )}
+
+      {screen === 'wallet' && (
+        <WalletScreen
+          cards={cards}
+          onAddCard={() => setScreen('add-card')}
+          onRemoveCard={handleRemoveCard}
+          onBack={() => setScreen('invoices')}
+        />
+      )}
+
+      {screen === 'invoice-history' && (
+        <InvoiceHistoryScreen
+          invoices={invoices}
+          onBack={handleBack}
+          onView={handleViewInvoice}
+          onPay={handlePayInvoice}
+          onDownload={handleDownloadInvoice}
+        />
       )}
 
       {screen === 'success' && (
@@ -283,6 +315,7 @@ function App() {
           onPrev={handlePrevInvoice}
           hasNext={invoices.findIndex(inv => inv.id === selectedInvoiceId) < invoices.length - 1}
           hasPrev={invoices.findIndex(inv => inv.id === selectedInvoiceId) > 0}
+          onDownload={handleDownloadInvoice}
         />
       )}
 
